@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local Train Schedule</title>
+</head>
+<body>
+    <h1>Train Schedule</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Status</th>
+        </tr>
+        {% for train in trains %}
+        <tr>
+            <td>{{ train[1] }}</td>
+            <td>{{ train[2] }}</td>
+            <td>{{ train[3] }}</td>
+            <td>{{ train[4] }}</td>
+            <td>{{ train[5] }}</td>
+            <td>{{ train[6] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

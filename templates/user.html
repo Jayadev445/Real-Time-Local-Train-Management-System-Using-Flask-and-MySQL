@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard - Train Management</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #eef2f3, #ffffff);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    header {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        color: #fff;
+        padding: 18px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: 1px;
+    }
+
+    header a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    header a:hover {
+        text-decoration: underline;
+    }
+
+    .container {
+        padding: 35px;
+    }
+
+    h2 {
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    thead {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    tbody tr {
+        transition: background 0.2s;
+    }
+
+    tbody tr:hover {
+        background-color: #f3f6ff;
+    }
+
+    th {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .book-btn {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        color: #fff;
+        background: linear-gradient(135deg, #43cea2, #185a9d);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .book-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .flash {
+        background: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 500;
+    }
+</style>
+
+</head>
+<body>
+    <header>
+        <h1>User Dashboard</h1>
+        <div>
+            Welcome, {{ session['username'] }} | <a href="/logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <h2>Available Trains</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Train Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Available Seats</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                <tr>
+                    <td>{{ train[0] }}</td>
+                    <td>{{ train[1] }}</td>
+                    <td>{{ train[2] }}</td>
+                    <td>{{ train[3] }}</td>
+                    <td>{{ train[4] }}</td>
+                    <td>{{ train[5] }}</td>
+                    <td>{{ train[7] }}</td>
+                    <td><a class="book-btn" href="/book_ticket/{{ train[0] }}">Book Ticket</a></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">No trains available at the moment.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

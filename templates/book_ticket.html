@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Ticket - Train Management</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #56ab2f, #a8e063);
+    }
+
+    .booking-container {
+        width: 420px;
+        padding: 35px 40px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        color: #fff;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 22px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    p {
+        margin: 6px 0;
+        font-size: 14px;
+        opacity: 0.95;
+    }
+
+    p strong {
+        color: #ffeb3b;
+    }
+
+    label {
+        margin-top: 15px;
+        display: block;
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    input[type=number] {
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 6px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.9);
+        transition: 0.3s;
+    }
+
+    input:focus {
+        background: #fff;
+        box-shadow: 0 0 0 2px #43cea2;
+    }
+
+    input[type=submit] {
+        margin-top: 25px;
+        width: 100%;
+        padding: 12px;
+        border-radius: 30px;
+        border: none;
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    input[type=submit]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .links {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 14px;
+    }
+
+    .links a {
+        color: #ffeb3b;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .links a:hover {
+        text-decoration: underline;
+    }
+
+    .flash {
+        background: rgba(220, 53, 69, 0.25);
+        padding: 8px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="booking-container">
+        <h2>Book Ticket</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <p><strong>Train Name:</strong> {{ train[1] }}</p>
+        <p><strong>Source:</strong> {{ train[2] }}</p>
+        <p><strong>Destination:</strong> {{ train[3] }}</p>
+        <p><strong>Departure:</strong> {{ train[4] }}</p>
+        <p><strong>Arrival:</strong> {{ train[5] }}</p>
+        <p><strong>Available Seats:</strong> {{ train[7] }}</p>
+
+        <form method="POST">
+            <label for="seats">Number of Seats to Book:</label>
+            <input type="number" name="seats" id="seats" min="1" max="{{ train[7] }}" required>
+
+            <input type="submit" value="Book Now">
+        </form>
+
+        <div class="links">
+            <a href="/user">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
